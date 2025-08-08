@@ -59,6 +59,12 @@ public class GridSystem : MonoBehaviour
         return height;
     }
 
+
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition.x < GetWidth() && gridPosition.z < GetWidth() && gridPosition.x >= 0 && gridPosition.z >= 0;
+    }
+
     public void GridDebugObject(Transform debugPrefab)
     {
         for(int x=0;x<width;x++)

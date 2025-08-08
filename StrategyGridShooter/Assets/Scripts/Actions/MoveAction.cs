@@ -13,6 +13,12 @@ public class MoveAction : BaseAction
     }
 
 
+    public bool IsValidActionAtGridPosition(GridPosition gridPosition)
+    {
+        List<GridPosition> validGridPositionList = GetValidActionAtGridPosition();
+        return validGridPositionList.Contains(gridPosition);
+    }
+
     public List<GridPosition> GetValidActionAtGridPosition()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -28,7 +34,18 @@ public class MoveAction : BaseAction
 
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                {
+                    continue;
+                }
+
+                if (LevelGrid.Instance.HasAnyUnitAtGridPosition(testGridPosition))
+                {
+                    continue;
+                }
+
+
+                if(unitGridPosition == testGridPosition)
                 {
                     continue;
                 }

@@ -6,10 +6,13 @@ public class Unit : MonoBehaviour
 {
 
     private GridPosition unitGridPosition;
+    [SerializeField] private MoveAction moveAction;
+    [SerializeField] private SpinAction spinAction;
 
     private void Awake()
     {
-        
+        moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
     }
 
 
@@ -23,5 +26,16 @@ public class Unit : MonoBehaviour
     {
         return unitGridPosition;
     }
+
+    public MoveAction GetMoveAction()
+    {
+        return moveAction;
+    }
+
+    public SpinAction GetSpinAction()
+    {  
+        return spinAction;
+    }
+
 
 }

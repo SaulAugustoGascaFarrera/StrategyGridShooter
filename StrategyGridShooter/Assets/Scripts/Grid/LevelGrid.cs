@@ -53,4 +53,11 @@ public class LevelGrid : MonoBehaviour
     }
 
 
+    public void MovedAtGridPosition(GridPosition fromGridPosition,GridPosition toGridPosition,Unit unit)
+    {
+        RemoveUnitAtGridPosition(fromGridPosition,unit);
+        AddUnitAtGridPosition(toGridPosition,unit);
+    }
+
+
 }

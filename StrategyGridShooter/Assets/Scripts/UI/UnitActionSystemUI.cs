@@ -13,12 +13,6 @@ public class UnitActionSystemUI : MonoBehaviour
         CreateUnitActionButtons();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void CreateUnitActionButtons()
     {
         foreach (Transform buttonTransform in actionButtonContainerTransform)
@@ -27,5 +21,15 @@ public class UnitActionSystemUI : MonoBehaviour
         }
 
         Unit selectedUnit = UnitActionSystem.Instance.GetUnitSelected();
+
+        foreach(BaseAction baseAction in selectedUnit.GetBaseActionArray())
+        {
+            Transform actionButtonTransform = Instantiate(actionButtonPrefab, actionButtonContainerTransform);
+
+            ActionButtonUI actionButtonUI = actionButtonTransform.GetComponent<ActionButtonUI>();
+
+            actionButtonUI.SetBaseAction(baseAction);
+        }
+
     }
 }

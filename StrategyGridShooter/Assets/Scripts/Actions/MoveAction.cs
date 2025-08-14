@@ -5,7 +5,42 @@ using UnityEngine;
 public class MoveAction : BaseAction
 {
 
+    [SerializeField] private float movementSpeed = 6.5f;
+    [SerializeField] private float rotationSpeed = 8.0f;
+    [SerializeField] private float distanceToMove = 0.2f;
     [SerializeField] private int maxMoveDistance = 1;
+    private Vector3 targetPosition;
+
+
+    public override void Awake()
+    {
+        base.Awake();
+        targetPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        Vector3 moveDiretion = (targetPosition - transform.position).normalized;
+
+        if (Vector3.Distance(targetPosition,transform.position) > distanceToMove)
+        {
+            
+            transform.position += moveDiretion * movementSpeed * Time.deltaTime;
+
+           
+        }
+
+        transform.forward = Vector3.Slerp(transform.forward, moveDiretion, rotationSpeed * Time.deltaTime);
+    }
+
+
+    public void Move(GridPosition gridPosition)
+    {
+        Debug.Log($"Unit Moved at: {gridPosition}");
+
+        targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+    }
+
 
     public override string GetActionName()
     {

@@ -8,11 +8,13 @@ public class Unit : MonoBehaviour
     private GridPosition unitGridPosition;
     [SerializeField] private MoveAction moveAction;
     [SerializeField] private SpinAction spinAction;
+    private BaseAction[] baseActionArray;
 
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        baseActionArray = GetComponents<BaseAction>();
     }
 
 
@@ -48,6 +50,11 @@ public class Unit : MonoBehaviour
     public SpinAction GetSpinAction()
     {  
         return spinAction;
+    }
+
+    public BaseAction[] GetBaseActionArray()
+    { 
+        return baseActionArray; 
     }
 
 

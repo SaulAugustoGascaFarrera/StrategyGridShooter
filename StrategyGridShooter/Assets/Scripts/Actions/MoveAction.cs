@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,12 @@ public class MoveAction : BaseAction
 
     private void Update()
     {
+
+        if (!isActive)
+        {
+            return;
+        }
+
         Vector3 moveDiretion = (targetPosition - transform.position).normalized;
 
         if (Vector3.Distance(targetPosition,transform.position) > distanceToMove)
@@ -27,18 +34,27 @@ public class MoveAction : BaseAction
             
             transform.position += moveDiretion * movementSpeed * Time.deltaTime;
 
-           
+
+        }
+        else
+        {
+            isActive = false;
+            onActionComplete();
         }
 
         transform.forward = Vector3.Slerp(transform.forward, moveDiretion, rotationSpeed * Time.deltaTime);
     }
 
 
-    public void Move(GridPosition gridPosition)
+    public override void TakeAction(GridPosition gridPosition,Action onActionComplete)
     {
-        Debug.Log($"Unit Moved at: {gridPosition}");
+        //Debug.Log($"Unit Moved at: {gridPosition}");
 
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+
+        isActive = true;
+
+        this.onActionComplete = onActionComplete;
     }
 
 
@@ -48,13 +64,13 @@ public class MoveAction : BaseAction
     }
 
 
-    public bool IsValidActionAtGridPosition(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPositionList = GetValidActionAtGridPosition();
-        return validGridPositionList.Contains(gridPosition);
-    }
+    //public bool IsValidActionAtGridPosition(GridPosition gridPosition)
+    //{
+    //    List<GridPosition> validGridPositionList = GetValidActionAtGridPosition();
+    //    return validGridPositionList.Contains(gridPosition);
+    //}
 
-    public List<GridPosition> GetValidActionAtGridPosition()
+    public override List<GridPosition> GetValidActionAtGridPosition()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
